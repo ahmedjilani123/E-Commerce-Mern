@@ -1,11 +1,11 @@
 const express = require('express');
-const { Register } = require('../controllers/user.controller');
+const { allRegister, PostRegister,OnlyOneUser,updateUser,loginUser} = require('../controllers/user.controller');
 const Routers = express.Router();
 
-
-
-
-Routers.get("/api/user/register",Register);
-
+Routers.get("/register",allRegister);
+Routers.post("/registerUser",PostRegister);
+Routers.post("/loginUser",loginUser);
+Routers.put("/u/:id",updateUser);
+Routers.get("/g/:id",OnlyOneUser);
 
 module.exports =Routers;
