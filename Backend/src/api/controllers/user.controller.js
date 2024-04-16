@@ -12,9 +12,9 @@ const allRegister = async (req, res) => {
 const PostRegister = async (req, res) => {
     const { FirstName, LastName, Email, Password, Contact } = req.body;
     try {
+       
         const { error, value } = SchemaValidatorR(req.body);
         if (error) {
-            console.log(error)
             return res.status(400).send(error.details);
         }
     }
