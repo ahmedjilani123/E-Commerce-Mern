@@ -3,10 +3,10 @@ const { allRegister, PostRegister,OnlyOneUser,updateUser,loginUser} = require('.
 const Routers = express.Router();
 
 Routers.route("/register").get(allRegister);
-Routers.route("/registerUser").post(PostRegister);
-Routers.route("/loginUser").post(loginUser);
-Routers.route("/u/:id").put(updateUser);
-Routers.route("/g/:id").get(OnlyOneUser);
+// Routers.route("/registerUser").post(PostRegister);
+// Routers.route("/loginUser").post(loginUser);
+// Routers.route("/u/:id").put(updateUser);
+// Routers.route("/g/:id").get(OnlyOneUser);
 
 
 module.exports = Routers;
