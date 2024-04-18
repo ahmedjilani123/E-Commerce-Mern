@@ -9,36 +9,54 @@ const allRegister = async (req, res) => {
     res.json({ users })
 
 }
+
 const PostRegister = async (req, res) => {
     const { FirstName, LastName, Email, Password, Contact } = req.body;
     try {
-       
         const { error, value } = SchemaValidatorR(req.body);
-        if (error) {
-            return res.status(400).send(error.details);
-        }
+        if (error) throw `Server Side Error :${error}`;
+        let AlreadyData = await UserData.find({ Email });
+        let userAvailable = AlreadyData.some(user => user.Email === req.body.Email);
+        if (userAvailable) throw "Already registered";
+        const salt = await bcrypt.genSalt(10);
+        let hashPassword = await bcrypt.hash(Password, salt);
+        const users = await UserData.create({
+            FirstName,
+            LastName,
+            Email,
+            Password: hashPassword,
+            Contact
+        });
+        users.save();
+        res.status(201).json(users);
     }
     catch (err) {
-        return res.status(400).json(err.message);
+        return res.status(400).json(err);
     }
-    const hashPassword =await bcrypt.hash(Password,10);
-    const users = await UserData.create({
-        FirstName,
-        LastName,
-        Email,
-        Password:hashPassword,
-        Contact
-    });
-    users.save();
-    res.status(201).json(users);
+
 }
 const loginUser = async (req, res) => {
+    const { Email, Password } = req.body;
+    const UserOneData = await UserData.find({ Email });
+    try {
+        if (!Password && !Email) throw `400, "password or email is required"`;
+        let userAvailable = UserOneData.some(user => user.Email === req.body.Email);
+        if (!userAvailable) throw `User Not Found`;
+        const PassowrdMatch = await bcrypt.compare(Password, UserOneData[0].Password);
+        if (!PassowrdMatch) throw `401,Wrong Password`;
+    }
+    catch (err) {
+        return res.status(400).json({ message: err});
+    }
+    //cockies
+    //jwt
+    res.status(200).json({ message: "Login successfully" });
+
 }
 const OnlyOneUser = async (req, res) => {
 }
 const updateUser = async (req, res) => {
 }
-
 
 
 module.exports = {

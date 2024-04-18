@@ -22,5 +22,4 @@ const UserShcema = new Schema({
         type: String,
     }
 }, { timestamps: true });
-
 module.exports = mongoose.model("UserData", UserShcema);
