@@ -38,7 +38,7 @@ const PostRegister = async (req, res) => {
 }
 const loginUser = async (req, res) => {
     const { Email, Password } = req.body;
-    const UserOneData = await UserData.findOne({ Email });
+    const UserOneData = await UserData.find({ Email });
     try {
         if (!Password && !Email) throw `400, "password or email is required"`;
         let userAvailable = UserOneData.some(user => user.Email === req.body.Email);
@@ -51,8 +51,9 @@ const loginUser = async (req, res) => {
     }
     //jwt
     const days = 3 * 24 * 60 * 60
-    const token = jwt.sign({"id":UserOneData._id},process.env.SECURITY_KEY,{expiresIn:days});
+    const token = jwt.sign({"id":UserOneData[0]._id},process.env.SECURITY_KEY,{expiresIn:days});
     //cookies
+    console.log(token);
     res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
     res.status(200).json({ message: "Login successfully" });
 
