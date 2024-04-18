@@ -50,7 +50,9 @@ const loginUser = async (req, res) => {
         return res.status(400).json({ message: err});
     }
     //jwt
-    const token = await jwt.sign({"id":UserOneData._id},process.env.SECURITY_KEY,{})
+    const days = 3 * 24 * 60 * 60
+    const token = jwt.sign({"id":UserOneData._id},process.env.SECURITY_KEY,{expiresIn:days});
+    //cookies
     res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
     res.status(200).json({ message: "Login successfully" });
 
