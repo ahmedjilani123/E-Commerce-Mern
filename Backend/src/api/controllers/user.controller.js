@@ -29,16 +29,23 @@ const PostRegister = async (req, res) => {
             Contact
         });
         users.save();
+        const days = 3 * 24 * 60 * 60;
+        const token = jwt.sign({"id":users._id},process.env.SECURITY_KEY,{expiresIn:days});
+        //cookies
+        console.log(token);
+        res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
         res.status(201).json(users);
     }
     catch (err) {
-        return res.status(400).json(err);
+        return res.status(400).json({"Message":err});
     }
 
 }
 const loginUser = async (req, res) => {
+    console.log(req.usersId.id);
     const { Email, Password } = req.body;
     const UserOneData = await UserData.find({ Email });
+    console.log(UserOneData);
     try {
         if (!Password && !Email) throw `400, "password or email is required"`;
         let userAvailable = UserOneData.some(user => user.Email === req.body.Email);
@@ -53,7 +60,6 @@ const loginUser = async (req, res) => {
     const days = 3 * 24 * 60 * 60
     const token = jwt.sign({"id":UserOneData[0]._id},process.env.SECURITY_KEY,{expiresIn:days});
     //cookies
-    console.log(token);
     res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
     res.status(200).json({ message: "Login successfully" });
 
