@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const UserData = require("../models/user.schema");
 const { SchemaValidatorR } = require("../validations/register.validate");
 
@@ -37,7 +38,7 @@ const PostRegister = async (req, res) => {
 }
 const loginUser = async (req, res) => {
     const { Email, Password } = req.body;
-    const UserOneData = await UserData.find({ Email });
+    const UserOneData = await UserData.findOne({ Email });
     try {
         if (!Password && !Email) throw `400, "password or email is required"`;
         let userAvailable = UserOneData.some(user => user.Email === req.body.Email);
@@ -48,8 +49,9 @@ const loginUser = async (req, res) => {
     catch (err) {
         return res.status(400).json({ message: err});
     }
-    //cockies
     //jwt
+    const token = await jwt.sign({"id":UserOneData._id},process.env.SECURITY_KEY,{})
+    res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
     res.status(200).json({ message: "Login successfully" });
 
 }
