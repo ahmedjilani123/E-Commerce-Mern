@@ -6,7 +6,7 @@ const UserShcema = new Schema({
     "ProductItems":[
         {
             "Product":{
-                type: mongoose.SchemaType.ObjectId,
+                type: Schema.Types.ObjectId,
                 ref: 'ProductsData'
             }
         }
@@ -19,7 +19,7 @@ const UserShcema = new Schema({
         "CountryCode":{type:String}
     },
     "OwnerName":{
-        type:mongoose.SchemaType.ObjectId,
+        type:Schema.Types.ObjectId,
         ref: 'UsersData'
     }
 }, { timestamps: true });
