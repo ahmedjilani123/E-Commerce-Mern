@@ -28,13 +28,13 @@ const PostRegister = async (req, res) => {
         });
         users.save();
         const days = 3 * 24 * 60 * 60;
-        const token = jwt.sign({"id":users._id},SecurityKey,{expiresIn:days});
+        const token = jwt.sign({ "id": users._id }, SecurityKey, { expiresIn: days });
         //cookies
-        res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
+        res.cookie("Token", token, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true });
         res.status(201).json(users);
     }
     catch (err) {
-        return res.status(400).json({"Message":err});
+        return res.status(400).json({ "Message": err });
     }
 
 }
@@ -49,29 +49,29 @@ const loginUser = async (req, res) => {
         if (!PassowrdMatch) throw `401,Wrong Password`;
     }
     catch (err) {
-        return res.status(400).json({ message: err});
+        return res.status(400).json({ message: err });
     }
     //jwt
     const days = 3 * 24 * 60 * 60
-    const token = jwt.sign({"id":UserOneData[0]._id},SecurityKey,{expiresIn:days});
+    const token = jwt.sign({ "id": UserOneData[0]._id }, SecurityKey, { expiresIn: days });
     //cookies
-    res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
+    res.cookie("Token", token, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true });
     res.status(200).json({ message: "Login successfully" });
 }
 const OnlyOneUser = async (req, res) => {
-    if(!req.params.id){
-        res.status(404).json({ message:"Please pass a valid id" });
+    if (!req.params.id) {
+        res.status(404).json({ message: "Please pass a valid id" });
     }
- UserData.findOne({_id:req.params.id}).then((user) =>{
-res.status(200).json(user);
+    UserData.findOne({ _id: req.params.id }).then((user) => {
+        res.status(200).json(user);
     })
 }
 const updateUser = async (req, res) => {
-    const {FirstName,LastName,Email,Password,Contact} = req.body;
-    const UserDataOld = await UserData.findOne({Email});
-try{
+    const { FirstName, LastName, Email, Password, Contact } = req.body;
+    const UserDataOld = await UserData.findOne({ Email });
+    try {
         const PassowrdMatch = await bcrypt.compare(Password, UserDataOld.Password);
-       if(!PassowrdMatch) throw `Old Password mismatch`;
+        if (!PassowrdMatch) throw `Old Password mismatch`;
         const salt = await bcrypt.genSalt(10);
         let hashPassword = await bcrypt.hash(Password, salt);
         console.log(hashPassword);
@@ -79,15 +79,15 @@ try{
             FirstName,
             LastName,
             Contact,
-            Password:hashPassword
+            Password: hashPassword
         }
-          UserData.updateOne({_id:UserDataOld._id},payload).then(odata=>{
+        UserData.updateOne({ _id: UserDataOld._id }, payload).then(odata => {
             res.send("Updated Successfully");
-          })
-    }catch(err){
+        })
+    } catch (err) {
         return res.send(err);
     }
-   
+
 }
 module.exports = {
     PostRegister,
