@@ -61,6 +61,12 @@ const loginUser = async (req, res) => {
     res.status(200).json({ message: "Login successfully" });
 }
 const OnlyOneUser = async (req, res) => {
+    if(!req.params.id){
+        res.status(404).json({ message:"Please pass a valid id" });
+    }
+ UserData.findOne({_id:req.params.id}).then((user) =>{
+res.status(200).json(user);
+    })
 }
 const updateUser = async (req, res) => {
     const {FirstName,LastName,Email,Password,Contact} = req.body;

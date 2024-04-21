@@ -3,8 +3,7 @@ const { Schema } = mongoose;
 const UserShcema = new Schema({
     "FirstName": {
         required: true,
-        type: String,
-        
+        type: String, 
     },
     "LastName":{
         type: String,

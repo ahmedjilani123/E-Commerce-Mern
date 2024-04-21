@@ -7,7 +7,7 @@ Routers.route("/register").get(allRegister);
 Routers.route("/registerUser").post(PostRegister);
 Routers.route("/loginUser").post(loginUser);
 Routers.route("/UpdateUser").put(updateUser);
-Routers.route("/g/:id").get(OnlyOneUser);
+Routers.route("/getOneUser/:id").get(OnlyOneUser);
 
 
 module.exports = Routers;
