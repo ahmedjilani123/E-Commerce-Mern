@@ -5,10 +5,8 @@ const UserShcema = new Schema({
     "Quantity":{type:Integer,default:1},
     "ProductItems":[
         {
-            "Product":{
-                type: Schema.Types.ObjectId,
-                ref: 'ProductsData'
-            }
+          type: Schema.Types.ObjectId,
+          ref: 'ProductsData'   
         }
     ],
     "Address":{
