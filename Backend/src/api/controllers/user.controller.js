@@ -1,20 +1,18 @@
-const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const UserData = require("../models/user.schema");
 const { SchemaValidatorR } = require("../validations/register.validate");
+const { SecurityKey } = require("../../config/allData.config");
 
 const allRegister = async (req, res) => {
-    const user = req.body;
     const users = await UserData.find();
     res.json({ users })
-
 }
 
 const PostRegister = async (req, res) => {
     const { FirstName, LastName, Email, Password, Contact } = req.body;
     try {
-        const { error, value } = SchemaValidatorR(req.body);
+        const { error } = SchemaValidatorR(req.body);
         if (error) throw `Server Side Error :${error}`;
         let AlreadyData = await UserData.find({ Email });
         let userAvailable = AlreadyData.some(user => user.Email === req.body.Email);
@@ -30,7 +28,7 @@ const PostRegister = async (req, res) => {
         });
         users.save();
         const days = 3 * 24 * 60 * 60;
-        const token = jwt.sign({"id":users._id},process.env.SECURITY_KEY,{expiresIn:days});
+        const token = jwt.sign({"id":users._id},SecurityKey,{expiresIn:days});
         //cookies
         res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
         res.status(201).json(users);
@@ -55,7 +53,7 @@ const loginUser = async (req, res) => {
     }
     //jwt
     const days = 3 * 24 * 60 * 60
-    const token = jwt.sign({"id":UserOneData[0]._id},process.env.SECURITY_KEY,{expiresIn:days});
+    const token = jwt.sign({"id":UserOneData[0]._id},SecurityKey,{expiresIn:days});
     //cookies
     res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
     res.status(200).json({ message: "Login successfully" });
