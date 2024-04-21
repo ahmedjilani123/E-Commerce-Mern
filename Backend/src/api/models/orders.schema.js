@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const UserShcema = new Schema({
     "TotalPrice":{type:Integer},
-    "Quantity":{type:Integer},
+    "Quantity":{type:Integer,default:1},
     "ProductItems":[
         {
             "Product":{
