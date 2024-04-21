@@ -32,7 +32,6 @@ const PostRegister = async (req, res) => {
         const days = 3 * 24 * 60 * 60;
         const token = jwt.sign({"id":users._id},process.env.SECURITY_KEY,{expiresIn:days});
         //cookies
-        console.log(token);
         res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
         res.status(201).json(users);
     }
@@ -42,10 +41,8 @@ const PostRegister = async (req, res) => {
 
 }
 const loginUser = async (req, res) => {
-    console.log(req.usersId.id);
     const { Email, Password } = req.body;
-    const UserOneData = await UserData.find({ Email });
-    console.log(UserOneData);
+    var UserOneData = await UserData.find({ Email })
     try {
         if (!Password && !Email) throw `400, "password or email is required"`;
         let userAvailable = UserOneData.some(user => user.Email === req.body.Email);
@@ -62,19 +59,36 @@ const loginUser = async (req, res) => {
     //cookies
     res.cookie("Token",token,{maxAge:1000 * 60 * 60 * 24,httpOnly:true});
     res.status(200).json({ message: "Login successfully" });
-
 }
 const OnlyOneUser = async (req, res) => {
 }
 const updateUser = async (req, res) => {
+    const {FirstName,LastName,Email,Password,Contact} = req.body;
+    const UserDataOld = await UserData.findOne({Email});
+try{
+        const PassowrdMatch = await bcrypt.compare(Password, UserDataOld.Password);
+       if(!PassowrdMatch) throw `Old Password mismatch`;
+        const salt = await bcrypt.genSalt(10);
+        let hashPassword = await bcrypt.hash(Password, salt);
+        console.log(hashPassword);
+        const payload = {
+            FirstName,
+            LastName,
+            Contact,
+            Password:hashPassword
+        }
+          UserData.updateOne({_id:UserDataOld._id},payload).then(odata=>{
+            res.send("Updated Successfully");
+          })
+    }catch(err){
+        return res.send(err);
+    }
+   
 }
-
-
 module.exports = {
     PostRegister,
     allRegister,
     loginUser,
     OnlyOneUser,
     updateUser
-
 }
