@@ -7,7 +7,7 @@ const Routers = express.Router();
 Routers.route("/products").get(getAllProducts);
 Routers.route("/AdminPost").post(PostProduct);
 Routers.route("/UpdateUser").put(UpdateProduct);
-Routers.route("/productOne/:id").get(OneProductView);
+Routers.route("/product/:id").get(OneProductView);
 
 
 module.exports = Routers;
