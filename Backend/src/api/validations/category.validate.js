@@ -3,8 +3,8 @@ const validator =(Schema)=>(payload)=>{
 return Schema.validate(payload,{abortEarly:false});
 }
 const Schema = Joi.object({
-    CatImage: Joi.string().lowercase().required(),
-    Category: Joi.string().required(),
+    CatImage: Joi.string().required(),
+    Category: Joi.string().lowercase().required(),
 });
 const SchemaValidatorC = validator(Schema);
 module.exports ={

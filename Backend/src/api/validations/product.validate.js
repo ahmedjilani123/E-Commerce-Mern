@@ -8,7 +8,7 @@ const Schema = Joi.object({
     ProductDescription: Joi.string(),
     ViewRate: Joi.number().integer(),
     Price: Joi.number().integer().required(),
-    Category: Joi.string().required()
+    Category: Joi.string().lowercase().required()
 });
 const SchemaValidatorP = validator(Schema);
 module.exports ={

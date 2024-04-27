@@ -1,4 +1,5 @@
 const CategoryData = require("../models/category.schema");
+const ProductData = require("../models/products.schema");
 const { SchemaValidatorC } = require("../validations/category.validate");
 
 
@@ -12,7 +13,18 @@ const GetAllCategoryView = async (req,res)=>{
     }
 };
 const OneCategoryViewDelete = async (req,res)=>{
-
+   //delete category statement space
+};
+const OneCategoryRelatedProduct = (req, res) => {
+    var CategoryName = req.body;
+    if (!CategoryName) {
+        return res.status(404).json({ Message: "Products not found" });
+    }
+    ProductData.find(CategoryName).then((All_Product_related_Detail) => {
+        res.status(200).json({ Message: "Successfully Get All Products", Data: All_Product_related_Detail });
+    }).catch((err) => {
+        res.status(400).json({ Message: err });
+    })
 };
 const PostCategoryView = (req,res)=>{
     const allData = req.body;
@@ -31,4 +43,5 @@ module.exports = {
     GetAllCategoryView,
     OneCategoryViewDelete,
     PostCategoryView,
+    OneCategoryRelatedProduct
 }
