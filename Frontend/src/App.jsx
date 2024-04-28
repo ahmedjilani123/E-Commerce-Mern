@@ -1,9 +1,13 @@
 import { useState } from "react";
-import Nav from "./pages/navbar/Nav";
+import Headers from "./pages/navbar/Headers";
+import Adds from "./pages/HomePage/Adds";
+
 function App() {
   return (
     <>
-   <Nav/>
+   <Headers/>
+  
+  <Adds></Adds>
     </>
   )
 }
