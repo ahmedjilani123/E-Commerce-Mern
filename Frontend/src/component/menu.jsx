@@ -12,6 +12,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { IoMenu, IoClose } from "react-icons/io5";
 import { RiAccountCircleFill } from "react-icons/ri";
+import SegmentBtn from './SegmentBtn';
 export default function MenuBtn() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -82,6 +83,8 @@ export default function MenuBtn() {
         <MenuItem onClick={handleClose}>
           Contact
         </MenuItem>
+        <Divider />
+          <SegmentBtn ></SegmentBtn>
       </Menu>
     </React.Fragment>
   );
