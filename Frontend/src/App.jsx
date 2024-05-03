@@ -5,12 +5,14 @@ import SignIn from "./pages/SignRegister/LogIn";
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
 import SignUp from "./pages/SignRegister/Register";
 import Footer from './pages/Footer/footer'
+import Product from "./component/product";
 function App() {
   return (
     <>
     <Router>
     <Headers></Headers>
       <Routes>
+        <Route path="/" element={<Product/>}></Route>
         <Route path="/Register" element={<SignUp/>}></Route>
         <Route path="/LogIn" element={ <SignIn></SignIn>}></Route>
       </Routes>
