@@ -8,7 +8,7 @@ import Footer from './pages/Footer/footer'
 import Product from "./component/product";
 function App() {
   return (
-    <>
+    <div>
     <Router>
     <Headers></Headers>
       <Routes>
@@ -22,7 +22,7 @@ function App() {
   
   
  
-    </>
+    </div>
   )
 }
 
