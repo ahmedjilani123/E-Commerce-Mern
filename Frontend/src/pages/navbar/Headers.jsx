@@ -54,7 +54,7 @@ const Headers = () => {
       <nav className='relative drop-shadow-sm flex justify-center items-center rounded-b-lg w-full h-12 bg-slate-100 md:min-w-[1200px]  md:bg-slate-100'>
         <ul className='hidden md:flex md:flex-wrap'>
           <li onClick={pressBtn} className={`border-b-${border} rounded mx-2 border-b-2 active:border-b-indigo-300 hover:border-b-indigo-500 p-1 flex items-center text-l  font-medium cursor-pointer hover:text-blue-500 `}>Home</li>
-          <li onClick={pressBtn} className="rounded mx-2 hover:border-b-indigo-500 p-1 flex items-center text-l  font-medium cursor-pointer hover:text-blue-500 "><Link to="/SignIn" >Products</Link></li>
+          <li onClick={pressBtn} className="rounded mx-2 hover:border-b-indigo-500 p-1 flex items-center text-l  font-medium cursor-pointer hover:text-blue-500 "><Link to="/" >Products</Link></li>
           <li onClick={pressBtn} className="rounded mx-2 hover:border-b-indigo-500 p-1 flex items-center text-l  font-medium cursor-pointer hover:text-blue-500 ">Category</li>
           <li onClick={pressBtn} className="rounded mx-2 hover:border-b-indigo-500 p-1 flex items-center text-l  font-medium cursor-pointer hover:text-blue-500 ">About</li>
           <li onClick={pressBtn} className="rounded mx-2 hover:border-b-indigo-500 p-1 flex items-center text-l  font-medium cursor-pointer hover:text-blue-500 ">Contact</li>
